@@ -15,6 +15,7 @@ Window
     visibility: "Maximized"
     title: "title"
 
+    // Note: Button has a bug when used along with a background image.
     RoundButton
     {
         id: button1

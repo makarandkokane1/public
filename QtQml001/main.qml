@@ -6,52 +6,58 @@ Copy png files in top level folder.
 res1.qrc -> Add Existing File.*/
 
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Window
+import "qrc:/QmlModule1"
 
 Window
 {
+    id: mainWindow
     visible: true
     visibility: "Maximized"
     title: "title"
 
-    // Note: Button has a bug when used along with a background image.
-    RoundButton
+    Component.onCompleted:
     {
-        id: button1
-        width: 150
-        height: 150
-        checkable: true
-        radius: 8
+        qobject1.setItem("mainWindow", mainWindow);
+    }
 
-        background: Item
+    Connections
+    {
+        target: qobject1
+        function onSignal1(param1)
         {
-            anchors.fill: parent
+            console.log("qobject1.signal1 reached mainWindow. param1 = " + param1)
+        }
+    }
 
-            Image
+    ColumnLayout
+    {
+        MRoundButton
+        {
+            onSignal1: function(param1)
             {
-                x: 10
-                y: 10
-                width: 140
-                source: "/blue.png"
-                fillMode: Image.PreserveAspectFit
-            }
-
-            Rectangle
-            {
-                anchors.fill: parent
-
-                border.color: button1.checked ? "#FF0000" : button1.hovered ? "#00FF00" : "#0000FF"
-                border.width: 1
-
-                radius: 8
-                color: "transparent"
+                console.log("button1.signal1 reached mainWindow. param1 = " + param1)
             }
         }
 
-        onCheckedChanged:
+        Rectangle
         {
-            console.log("button1 check changed: " + checked)
+            id: rectangle1
+            implicitWidth: 150
+            implicitHeight: 150
+            color: "red"
+
+            MouseArea
+            {
+                anchors.fill: parent
+                onPressed: function(mouse)
+                // onPressed: (mouse)=>     // works the same.
+                {
+                    console.log("rectangle1 mousearea pressed " + mouse.buttons)
+                }
+            }
         }
     }
 }

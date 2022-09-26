@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>blue.png</file>
         <file>purple.png</file>
+        <file>main.qml</file>
+        <file>QmlModule1/MRoundButton.qml</file>
     </qresource>
 </RCC>

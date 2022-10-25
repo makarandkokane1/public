@@ -26,9 +26,9 @@ Window
     Connections
     {
         target: qobject1
-        function onSignal1(param1)
+        function onSignal1(input)
         {
-            console.log("qobject1.signal1 reached mainWindow. param1 = " + param1)
+            console.log("qobject1.signal1 reached mainWindow. param1 = " + input)
         }
     }
 
@@ -56,6 +56,51 @@ Window
                 // onPressed: (mouse)=>     // works the same.
                 {
                     console.log("rectangle1 mousearea pressed " + mouse.buttons)
+                }
+
+                onWheel: function(wheel)
+                {
+                    console.log("rectangle1 mousearea wheel " + wheel)
+                }
+
+                onClicked: function(mouse) {
+                    console.log("rectangle1 mousearea clicked " + mouse)
+                }
+
+                onDoubleClicked: function(mouse) {
+                    console.log("rectangle1 mousearea double-clicked " + mouse)
+                }
+            }
+        }
+
+        // Docked floating item.
+        Rectangle
+        {
+            id: containerItem
+            implicitWidth: 150
+            implicitHeight: 150
+            color: "#ffdddd"
+
+            Rectangle
+            {
+                id: containedItem
+                width: 50; height: 50
+                color: "red"
+                opacity: (150.0 - containedItem.x) / 150
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    drag
+                    {
+                        target: containedItem
+                        axis: Drag.XAndYAxis
+                        minimumX: 0
+                        maximumX: containerItem.width - containedItem.width
+                        minimumY: 0
+                        maximumY: containerItem.height - containedItem.height
+                    }
+                    cursorShape: Qt.OpenHandCursor
                 }
             }
         }

@@ -104,5 +104,57 @@ Window
                 }
             }
         }
+
+        Grid
+        {
+            id: checkerboard
+            width: 150
+            height: 150
+            property int u: 5
+
+            rows: height / u
+            columns: width / u
+
+            Repeater
+            {
+                model: checkerboard.rows * checkerboard.columns
+
+                Rectangle
+                {
+                    property int rowNumber: index / checkerboard.columns
+                    property int columnNumber: index - rowNumber * checkerboard.columns
+
+                    width: checkerboard.u
+                    height: checkerboard.u
+
+                    color:
+                    {
+                        if (rowNumber === 0 || rowNumber === checkerboard.rows - 1 ||
+                            columnNumber === 0 || columnNumber === checkerboard.columns - 1)
+                        {
+                            return "red"
+                        }
+                        return ((rowNumber + columnNumber) % 2 == 0) ? "black" : "white"
+                    }
+
+                    radius:
+                    {
+                        let hEdge = rowNumber === 1 || rowNumber === checkerboard.rows - 2
+                        let vEdge = columnNumber === 1 || columnNumber === checkerboard.columns - 2
+                        if (vEdge && hEdge)
+                        {
+                            return 2
+                        }
+                        hEdge = rowNumber === 0 || rowNumber === checkerboard.rows - 1
+                        vEdge = columnNumber === 0 || columnNumber === checkerboard.columns - 1
+                        if (vEdge && hEdge)
+                        {
+                            return 4
+                        }
+                        return 0
+                    }
+                }
+            }
+        }
     }
 }

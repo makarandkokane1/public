@@ -5,14 +5,15 @@ Top project tree node -> Add New -> Qt -> Qt Resource File -> name: res1
 Copy png files in top level folder.
 res1.qrc -> Add Existing File.*/
 
-import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
-import QtQuick.Window
+import QtQuick 2.14
+import QtQuick.Layouts 1.14
+import QtQuick.Controls 2.14
+import QtQuick.Window 2.14
 import "qrc:/QmlModule1"
 
 Window
 {
+
     id: mainWindow
     visible: true
     visibility: "Maximized"
@@ -157,4 +158,51 @@ Window
             }
         }
     }
+    Popup {
+        width: 300
+        height: 300
+        visible: true
+        modal: true
+        //padding: 50
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+        MouseArea {
+            anchors.fill: parent
+            onDoubleClicked: console.log("m1")
+        }
+        Component.onCompleted: {
+            console.log(padding)
+            console.log(bottomPadding)
+            console.log(topPadding)
+            console.log(leftPadding)
+            console.log(rightPadding)
+            console.log(verticalPadding)
+            console.log(horizontalPadding)
+
+            console.log(margins)
+            console.log(leftMargin)
+            console.log(rightMargin)
+            console.log(topMargin)
+            console.log(bottomMargin)
+
+            console.log(topInset)
+            console.log(bottomInset)
+            console.log(leftInset)
+            console.log(rightInset)
+        }
+    }
+    MouseArea {
+        anchors.fill: parent
+        z:1000
+
+        onDoubleClicked: {
+            console.log("makarand7")
+            if (parent.visibility === Window.Maximized) {
+                parent.showNormal()
+            }
+            else {
+                parent.showMaximized()
+            }
+        }
+    }
+
 }

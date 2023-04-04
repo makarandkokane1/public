@@ -1,5 +1,5 @@
-import QtQuick
-import QtQuick.Controls
+import QtQuick 2.14
+import QtQuick.Controls 2.14
 
 // Note: Button has a bug when used along with a background image.
 RoundButton
